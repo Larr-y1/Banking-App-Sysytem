@@ -4,6 +4,7 @@
 This is a simple banking system implemented as a Command-Line Interface (CLI) application using Python, SQLAlchemy ORM, and Alembic for database migrations. The system manages customers, accounts, transactions, branches, and their relationships, providing CRUD operations and linkage between accounts and branches.
 
 The project follows a modular architecture with a clear separation of concerns between models, CLI interfaces, database setup, and migration scripts.
+ ---
 
 ## ⚙️ Features
 - Manage Customers: Create, update, delete, and list customers.
@@ -16,8 +17,12 @@ The project follows a modular architecture with a clear separation of concerns b
 - Database schema management with Alembic migrations.
 - Seed script to populate initial data for testing.
 - Interactive CLI menus for all operations.
+---
+
 
 ## 📁 Project Structure
+
+```
 lib/
 ├── cli/
 │   ├── base_cli.py           # Base CLI class for common input methods
@@ -38,6 +43,8 @@ lib/
 ├── models.py                 # SQLAlchemy ORM models
 ├── seed.py                   # Script to populate sample data
 └── __init__.py
+```
+---
 
 ## 📋 Prerequisites
 - Python 3.8+
@@ -45,6 +52,8 @@ lib/
 - SQLite as the lightweight database engine
 - Alembic for managing database migrations
 - Command-Line Interface (CLI) for user interaction
+
+---
 
 ## 🛠 Installation
 ### 1.Clone the repository:
@@ -64,6 +73,9 @@ venv\Scripts\activate    # Windows
 pip install pipenv
 pipenv install
 ```
+
+---
+
 
 ## 🚀 Usage
 ### Run the CLI (from the project root)
@@ -96,6 +108,8 @@ Navigate menus by typing the option number and following prompts.
 - Make transactions on the account.
 - Query linked accounts and branches.
 
+---
+
 ## 🤝 Development & Contribution
 - Fork the repository and create feature branches.
 - Use Alembic for database migrations when modifying models.
@@ -103,8 +117,12 @@ Navigate menus by typing the option number and following prompts.
 - Write clear commit messages.
 - Run and test your changes locally.
 
+---
+
 ## 📄 License
 This project is open source and available under the MIT License.
+
+---
 
 Happy coding, and let’s build powerful CLI together! 🚀
 
