@@ -9,10 +9,11 @@ class AccountCLI(BaseCLI):
         print("\n--- Account Menu ---")
         print("0. Return to main menu")
         print("1. Create account")
-        print("2. Delete account")
-        print("3. Display all accounts")
-        print("4. Find account by attribute")
-        print("5. View related transactions and customer")
+        print("2. Update account")
+        print("3. Delete account")
+        print("4. Display all accounts")
+        print("5. Find account by attribute")
+        print("6. View related transactions and customer")
 
     def create(self):
         account_type = self.input_str("Enter account type: ")
@@ -27,6 +28,31 @@ class AccountCLI(BaseCLI):
         self.session.add(new_account)
         self.session.commit()
         print(f"Account created with ID: {new_account.id}")
+        
+    def update(self):
+        account_id = self.input_int("Enter account ID to update: ")
+        account = self.session.query(Account).get(account_id)
+        if not account:
+            print("Account not found.")
+            return
+
+        print(f"Current Type: {account.account_type} | Balance: {account.balance}")
+        account_type = self.input_str("Enter new account type (press Enter to keep current): ", allow_empty=True)
+        balance = self.input_str("Enter new balance (press Enter to keep current): ", allow_empty=True)
+        
+        if account_type:
+            account.account_type = account_type
+        if balance:
+            try:
+                account.balance = float(balance)
+            except ValueError:
+                print("Invalid balance format. Must be a number.")
+                return
+
+        self.session.commit()
+        print("Account updated successfully.")
+
+        
 
     def delete(self):
         account_id = self.input_int("Enter account ID to delete: ")

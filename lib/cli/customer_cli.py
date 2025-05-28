@@ -7,10 +7,11 @@ class CustomerCLI(BaseCLI):
         print("\n--- Customer Menu ---")
         print("0. Return to main menu")
         print("1. Create customer")
-        print("2. Delete customer")
-        print("3. Display all customers")
-        print("4. Find customer by attribute")
-        print("5. View related accounts")
+        print("2. Update customer")
+        print("3. Delete customer")
+        print("4. Display all customers")
+        print("5. Find customer by attribute")
+        print("6. View related accounts")
 
     def create(self):
         name = self.input_str("Enter customer name: ")
@@ -19,6 +20,21 @@ class CustomerCLI(BaseCLI):
         self.session.add(new_customer)
         self.session.commit()
         print(f"Customer created with ID: {new_customer.id}")
+        
+    def update(self):
+        customer_id = self.input_int("Enter customer ID to update")
+        customer = self.session.query(Customer).get(customer_id)
+        print(f"\n Updating Customer (ID: {customer.id}) — Name: {customer.name}, Email: {customer.email}")
+        name = self.input_str("Enter new name (leave blank to keep current): ", allow_empty=True)
+        email = self.input_str("Enter new email (leave blank to keep current): ", allow_empty=True)
+        if name:
+            customer.name = name
+        if email:
+            customer.email = email
+        self.session.commit()
+        print(f" Customer updated: ID: {customer.id} | Name: {customer.name} | Email: {customer.email}")
+
+
 
     def delete(self):
         customer_id = self.input_int("Enter customer ID to delete: ")

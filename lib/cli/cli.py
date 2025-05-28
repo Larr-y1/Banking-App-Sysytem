@@ -8,7 +8,6 @@ from lib.cli.account_branch_cli import AccountBranchCLI
 
 Base.metadata.create_all(engine)
 
-# import other CLIs similarly
 
 def main():
     Session = sessionmaker(bind=engine)

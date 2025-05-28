@@ -1,4 +1,4 @@
-# lib/transaction_cli.py
+from datetime import datetime
 
 from lib.cli.base_cli import BaseCLI
 from lib.models import Transaction, Account
@@ -9,10 +9,11 @@ class TransactionCLI(BaseCLI):
         print("\n--- Transaction Menu ---")
         print("0. Return to main menu")
         print("1. Create transaction")
-        print("2. Delete transaction")
-        print("3. Display all transactions")
-        print("4. Find transaction by attribute")
-        print("5. View related account")
+        print("2. Update transaction")
+        print("3. Delete transaction")
+        print("4. Display all transactions")
+        print("5. Find transaction by attribute")
+        print("6. View related account")
 
     def create(self):
         amount = self.input_int("Enter transaction amount: ")
@@ -28,6 +29,37 @@ class TransactionCLI(BaseCLI):
         account.balance += amount
         self.session.commit()
         print(f"Transaction created with ID: {new_transaction.id}. Account balance updated to {account.balance}.")
+        
+    def update(self):
+        transaction_id = self.input_int("Enter transaction ID to update: ")
+        transaction = self.session.query(Transaction).get(transaction_id)
+
+        if not transaction:
+            print("Transaction not found.")
+            return
+
+        print(f"Updating Transaction ID: {transaction.id}")
+
+        amount = self.input_int("Enter new amount (leave blank to keep current): ", allow_empty=True)
+        date_str = self.input_str("Enter new transaction date (YYYY-MM-DD) or leave blank: ", allow_empty=True)
+        account_id = self.input_int("Enter new account ID (leave blank to keep current): ", allow_empty=True)
+
+        if amount != "":
+            transaction.amount = int(amount)
+
+        if date_str:
+            try:
+                new_date = datetime.strptime(date_str, "%Y-%m-%d")
+                transaction.transaction_date = new_date
+            except ValueError:
+                print("Invalid date format. Use YYYY-MM-DD.")
+                return
+
+        if account_id != "":
+            transaction.account_id = int(account_id)
+
+        self.session.commit()
+        print(" Transaction updated successfully.")
 
     def delete(self):
         transaction_id = self.input_int("Enter transaction ID to delete: ")

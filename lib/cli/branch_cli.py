@@ -9,10 +9,11 @@ class BranchCLI(BaseCLI):
         print("\n--- Branch Menu ---")
         print("0. Return to main menu")
         print("1. Create branch")
-        print("2. Delete branch")
-        print("3. Display all branches")
-        print("4. Find branch by attribute")
-        print("5. View related accounts")
+        print("2. Update branch")
+        print("3. Delete branch")
+        print("4. Display all branches")
+        print("5. Find branch by attribute")
+        print("6. View related accounts")
 
     def create(self):
         name = self.input_str("Enter branch name: ")
@@ -21,6 +22,25 @@ class BranchCLI(BaseCLI):
         self.session.add(branch)
         self.session.commit()
         print(f"Branch created with ID: {branch.id}")
+        
+    def update(self):
+        branch_id = self.input_str("Enter branch Id: ")
+        branch = self.session.query(Branch).get(branch_id)
+        if not branch:
+            print("Branch not found")
+            return
+        
+        print(f"Branch Name: {branch.name} | Location: {branch.location}")
+        branch_name = self.input_str("Enter new branch name (press Enter to keep current): ", allow_empty=True)
+        location = self.input_str("Enter new location (press Enter to keep current): ", allow_empty=True)
+
+        if branch_name:
+            branch.name = branch_name
+        if location:
+            branch.location = location
+
+        self.session.commit()
+        print(" Branch updated successfully.")
 
     def delete(self):
         branch_id = self.input_int("Enter branch ID to delete: ")
@@ -56,7 +76,6 @@ class BranchCLI(BaseCLI):
 
     def view_related(self):
         branch_id = self.input_int("Enter branch ID to view related accounts: ")
-        # You need to query AccountBranch for this relation
         relations = self.session.query(AccountBranch).filter_by(branch_id=branch_id).all()
         if not relations:
             print("No accounts related to this branch.")

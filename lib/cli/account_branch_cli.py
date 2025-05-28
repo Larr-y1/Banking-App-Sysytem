@@ -9,10 +9,11 @@ class AccountBranchCLI(BaseCLI):
         print("\n--- Account-Branch Menu ---")
         print("0. Return to main menu")
         print("1. Link account to branch")
-        print("2. Unlink account from branch")
-        print("3. Display all account-branch links")
-        print("4. Find link by attribute")
-        print("5. View related account and branch")
+        print("2. Update account to branch")
+        print("3. Unlink account from branch")
+        print("4. Display all account-branch links")
+        print("5. Find link by attribute")
+        print("6. View related account and branch")
 
     def create(self):
         account_id = self.input_int("Enter account ID: ")
@@ -26,6 +27,25 @@ class AccountBranchCLI(BaseCLI):
         self.session.add(link)
         self.session.commit()
         print(f"Link created with ID: {link.id}")
+        
+    def update(self):
+        link_id = self.input_int("Enter the link ID (from account_branch) to update: ")
+        link = self.session.query(AccountBranch).get(link_id)
+        if not link:
+            print("Link not found.")
+            return
+        print(f"Current → Account ID: {link.account_id} | Branch ID: {link.branch_id}")
+        new_acc = self.input_int("Enter new account ID (leave blank to keep current): ", allow_empty=True)
+        new_br  = self.input_int("Enter new branch ID (leave blank to keep current): ", allow_empty=True)
+        if new_acc != "":
+            link.account_id = new_acc
+        if new_br != "":
+            link.branch_id = new_br
+        self.session.commit()
+        print("Link updated:")
+        print(f"    → Account ID: {link.account_id} | Branch ID: {link.branch_id}")
+
+
 
     def delete(self):
         link_id = self.input_int("Enter link ID to delete: ")

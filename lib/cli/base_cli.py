@@ -2,12 +2,16 @@ class BaseCLI:
     def __init__(self, session):
         self.session = session
 
-    def input_int(self, prompt, error_msg="Please enter a valid integer."):
+    def input_int(self, prompt, allow_empty=False):
         while True:
+            val = input(prompt).strip()
+            if allow_empty and val == "":
+                return ""  
             try:
-                return int(input(prompt).strip())
+                return int(val)  
             except ValueError:
-                print(error_msg)
+                print("Please enter a valid number.")  
+
 
     def input_str(self, prompt, allow_empty=False):
         while True:
@@ -23,6 +27,9 @@ class BaseCLI:
         raise NotImplementedError()
 
     def create(self):
+        raise NotImplementedError()
+    
+    def update(self):
         raise NotImplementedError()
 
     def delete(self):
@@ -46,12 +53,14 @@ class BaseCLI:
             elif choice == "1":
                 self.create()
             elif choice == "2":
-                self.delete()
+                self.update()
             elif choice == "3":
-                self.list_all()
+                self.delete()
             elif choice == "4":
-                self.find_by_attribute()
+                self.list_all()
             elif choice == "5":
+                self.find_by_attribute()
+            elif choice == "6":
                 self.view_related()
             else:
                 print("Invalid choice. Try again.")
