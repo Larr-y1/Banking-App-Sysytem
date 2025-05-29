@@ -110,6 +110,12 @@ Navigate menus by typing the option number and following prompts.
 
 ---
 
+🎥 Link to Demo
+- ▶️ **[Link to Demo](https://www.loom.com/share/97543e434b2a4f18a9c688f2cda0f9f0?sid=5fa5e98e-c302-4983-8f97-f35b335e24af)** 
+
+🧩 Database Entity Diagram
+- 🗺️ **[Entity Relationship Diagram](https://dbdiagram.io/d/Banking-App-Sysytem-68345fdf6980ade2eb6a8b25)**
+
 ## 🤝 Development & Contribution
 - Fork the repository and create feature branches.
 - Use Alembic for database migrations when modifying models.
@@ -118,6 +124,8 @@ Navigate menus by typing the option number and following prompts.
 - Run and test your changes locally.
 
 ---
+
+##
 
 ## 📄 License
 This project is open source and available under the MIT License.
